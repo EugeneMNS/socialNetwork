@@ -1,0 +1,16 @@
+.header {
+    position: relative;
+    grid-area: h;
+    background-color: darkgoldenrod;
+    color: aliceblue;
+}
+.header img {
+    height: 100%;
+
+}
+
+.log {
+    position: absolute;
+    right: 5px;
+    top: 0;
+}

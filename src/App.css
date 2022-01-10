@@ -1,0 +1,16 @@
+.app-wrapper {
+    display: grid;
+    grid-template-areas: 'h h' 'n c';
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 2fr 8fr;
+    grid-gap: 5px;
+    width: 1000px;
+    margin: 0 auto;
+
+
+}
+
+.wrapper-content {
+    grid-area: c;
+    background-color: azure;
+}

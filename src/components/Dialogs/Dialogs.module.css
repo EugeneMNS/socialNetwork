@@ -1,0 +1,27 @@
+.dialogsContainer {
+    display: grid;
+    grid-template-columns: 1.5fr 7fr;
+}
+
+.item {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+
+}
+
+.item.active {
+    color: coral;
+}
+
+.message {
+    padding-top: 10px;
+    color: darkgray;
+}
+
+.textarea textarea {
+    margin-top: 80px;
+
+    width: 150px;
+    height: 15px;
+}
