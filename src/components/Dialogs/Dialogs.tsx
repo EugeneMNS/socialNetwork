@@ -2,6 +2,7 @@ import React from 'react'
 import {NavLink} from 'react-router-dom'
 import s from './Dialogs.module.css'
 import {DialogsPageType} from "../../redux/MyState";
+import {StoreType} from "../../redux/Store";
 
 type DialogsItemPropsType = {
     id: number
@@ -29,22 +30,21 @@ const Message: React.FC<MessagePropsType> = ({message}) => {
 
 type DialogsPropsType = {
     state: DialogsPageType
-    addDialogsText: () => void
-    updateDialogsMessage: (text: string | undefined) => void
+    store: StoreType
 }
 
-export const Dialogs: React.FC<DialogsPropsType> = ({state, addDialogsText, updateDialogsMessage}) => {
+export const Dialogs: React.FC<DialogsPropsType> = ({state, store}) => {
 
     const dialogsItems = state.dialogItems.map( d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
     const dialogsTexts = state.dialogTexts.map( (t,i) => <Message key={i} message={t.message}/>)
     const newMessageElement = React.createRef<HTMLTextAreaElement>()
     const addMessage = () => {
-        addDialogsText()
+        store.addDialogsText()
     }
     const onChangeMessage = () => {
 
         const text = newMessageElement.current?.value
-        updateDialogsMessage(text)
+        store.updateDialogsMessage(text)
     }
     return (
         <div className={s.dialogsContainer}>

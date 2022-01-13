@@ -2,22 +2,22 @@ import React, {ChangeEvent, LegacyRef} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post"
 import {MessageType} from "../../../redux/MyState"
+import {StoreType} from "../../../redux/Store"
 
 type MyPostPropsType = {
     messages: Array<MessageType>
     textMessage: string | undefined
-    addPost: () => void
-    changeTextMessage: (text: string | undefined) => void
+    store: StoreType
 }
-export const MyPosts: React.FC<MyPostPropsType> = ({messages, textMessage, addPost, changeTextMessage}) => {
+export const MyPosts: React.FC<MyPostPropsType> = ({messages, textMessage, store}) => {
     const message = messages.map((m, i) => <Post key={i} message={m.message} likesCount={m.likesCount}/>)
     const newPostElement = React.createRef<HTMLTextAreaElement>()
     const clickPost = () => {
-        addPost()
+        store.addPost()
     }
     const onChangeText = () => {
         const text = newPostElement.current?.value
-        changeTextMessage(text)
+        store.changeTextMessage(text)
     }
     return (
         <div className={s.myPost}>

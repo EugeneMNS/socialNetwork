@@ -2,14 +2,14 @@ import React from 'react'
 import s from './Profile.module.css'
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfilePageType} from "../../redux/MyState";
+import {StoreType} from "../../redux/Store";
 
 type ProfilePropsType = {
     state: ProfilePageType
-    addPost: () => void
-    changeTextMessage: (text: string | undefined) => void
+    store: StoreType
 }
 
-export const Profile: React.FC<ProfilePropsType> = ({state, addPost, changeTextMessage}) => {
+export const Profile: React.FC<ProfilePropsType> = ({state, store}) => {
 
     return (
         <div className={s.profile}>
@@ -18,7 +18,7 @@ export const Profile: React.FC<ProfilePropsType> = ({state, addPost, changeTextM
 ava and my profile
             </div>
             <MyPosts messages={state.messages} textMessage={state.textMessage}
-                     addPost={addPost} changeTextMessage={changeTextMessage}/>
+                     store={store}/>
         </div>
     )
 }
