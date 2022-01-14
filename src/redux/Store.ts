@@ -1,6 +1,8 @@
-let rerenderEntireTree = () => {
-    console.log('rerender falsh')
-}
+export const ADD_POST = 'ADD-POST'
+export const CHANGE_TEXT_MESSAGE = 'CHANGE-TEXT-MESSAGE'
+export const ADD_DIALOGS_TEXT = 'ADD-DIALOGS-TEXT'
+export const UPDATE_DIALOGS_TEXT = 'UPDATE-DIALOGS-TEXT'
+
 
 export type MessageType = {
     id: number
@@ -40,8 +42,12 @@ export type StateType = {
     sidebar: SidebarType
 }
 
+type ActionType = {
+    type: string
+    text?: string
+}
 export type StoreType = {
-    _subscriber: () => void
+    _callSubscriber: () => void
     _state: StateType
     getState: () => StateType
     subscriber: (observer: () => void) => void
@@ -49,11 +55,14 @@ export type StoreType = {
     addDialogsText: () => void
     changeTextMessage: (text: string | undefined) => void
     updateDialogsMessage: (newMessage: string | undefined) => void
+    dispatch: (action: ActionType) => void
 }
 
 
+
+
 export const store: StoreType = {
-    _subscriber() {
+    _callSubscriber() {
         console.log('no subscribers (observers)')
     },
     _state: {
@@ -74,7 +83,7 @@ export const store: StoreType = {
                     id: 3,
                     message: "Don't forget for me, please!",
                     likesCount: 15
-                },
+                }
             ],
             textMessage: ''
         },
@@ -118,7 +127,7 @@ export const store: StoreType = {
     },
 
     subscriber(observer: () => void) {
-        this._subscriber = observer
+        this._callSubscriber = observer
     },
 
 
@@ -131,7 +140,7 @@ export const store: StoreType = {
 
         this._state.profilePage.messages.push(newPost)
         this._state.profilePage.textMessage = ''
-        this._subscriber()
+        this._callSubscriber()
 
     },
 
@@ -142,16 +151,49 @@ export const store: StoreType = {
         }
         this._state.dialogsPage.dialogTexts.push(newText)
         this._state.dialogsPage.newMessage = ''
-        this._subscriber()
+        this._callSubscriber()
     },
-
     changeTextMessage(text: string | undefined) {
 
         this._state.profilePage.textMessage = text
-        this._subscriber()
+        this._callSubscriber()
     },
     updateDialogsMessage(newMessage: string | undefined) {
+
         this._state.dialogsPage.newMessage = newMessage
-        this._subscriber()
+        this._callSubscriber()
     },
-}
+
+    dispatch(action) {
+        if (action.type === ADD_POST) {
+            const newPost = {
+                id: 4,
+                message: this._state.profilePage.textMessage,
+                likesCount: 19
+            }
+
+            this._state.profilePage.messages.push(newPost)
+            this._state.profilePage.textMessage = ''
+            this._callSubscriber()
+
+        }else if (action.type === CHANGE_TEXT_MESSAGE) {
+            this._state.profilePage.textMessage = action.text
+            this._callSubscriber()
+
+        }else if (action.type === ADD_DIALOGS_TEXT) {
+            const newText = {
+                id: 13,
+                message: this._state.dialogsPage.newMessage
+            }
+            this._state.dialogsPage.dialogTexts.push(newText)
+            this._state.dialogsPage.newMessage = ''
+            this._callSubscriber()
+
+        }else if (action.type === UPDATE_DIALOGS_TEXT) {
+            this._state.dialogsPage.newMessage = action.text
+            this._callSubscriber()
+
+        }
+
+    }
+} 
