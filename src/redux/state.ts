@@ -42,24 +42,17 @@ export type StateType = {
     sidebar: SidebarType
 }
 
-type ActionType = {
+export type ActionType = {
     type: string
-    text?: string
+    text?: string | undefined
 }
 export type StoreType = {
     _callSubscriber: () => void
     _state: StateType
     getState: () => StateType
     subscriber: (observer: () => void) => void
-    addPost: () => void
-    addDialogsText: () => void
-    changeTextMessage: (text: string | undefined) => void
-    updateDialogsMessage: (newMessage: string | undefined) => void
     dispatch: (action: ActionType) => void
 }
-
-
-
 
 export const store: StoreType = {
     _callSubscriber() {
@@ -130,40 +123,6 @@ export const store: StoreType = {
         this._callSubscriber = observer
     },
 
-
-    addPost() {
-        const newPost = {
-            id: 4,
-            message: this._state.profilePage.textMessage,
-            likesCount: 19
-        }
-
-        this._state.profilePage.messages.push(newPost)
-        this._state.profilePage.textMessage = ''
-        this._callSubscriber()
-
-    },
-
-    addDialogsText() {
-        const newText = {
-            id: 13,
-            message: this._state.dialogsPage.newMessage
-        }
-        this._state.dialogsPage.dialogTexts.push(newText)
-        this._state.dialogsPage.newMessage = ''
-        this._callSubscriber()
-    },
-    changeTextMessage(text: string | undefined) {
-
-        this._state.profilePage.textMessage = text
-        this._callSubscriber()
-    },
-    updateDialogsMessage(newMessage: string | undefined) {
-
-        this._state.dialogsPage.newMessage = newMessage
-        this._callSubscriber()
-    },
-
     dispatch(action) {
         if (action.type === ADD_POST) {
             const newPost = {
@@ -196,4 +155,20 @@ export const store: StoreType = {
         }
 
     }
+    
 } 
+
+export const addPostActionCreate=():ActionType => ({
+    type: ADD_POST
+})
+export const changeTextMessageActionCreater=(text:string | undefined):ActionType => ({
+    type: CHANGE_TEXT_MESSAGE,
+    text: text
+})
+export const addDialogsTextActionCreate=():ActionType => ({
+    type: ADD_DIALOGS_TEXT
+})
+export const updateDialogsTextActionCreate=(text:string | undefined):ActionType => ({
+    type: UPDATE_DIALOGS_TEXT,
+    text: text
+})
