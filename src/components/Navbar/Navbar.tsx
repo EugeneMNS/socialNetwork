@@ -1,12 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { SidebarType} from '../../redux/MyState'
+import { SidebarType} from '../../redux/state'
+import  {SidebarUser} from "../Sidebar/Sidebar"
 import s from './Navbar.module.css'
 
 type NavbarPropsType = {
     state: SidebarType
 }
-export const Navbar: React.FC<NavbarPropsType> = ({state}) => {
+export const Navbar: React.FC<NavbarPropsType> =React.memo( ({state}) => {
 
     const sidebarItems = state.friends.map(i => <SidebarUser key={i.id} name={i.name} src={i.src}/>)
 
@@ -24,17 +25,4 @@ export const Navbar: React.FC<NavbarPropsType> = ({state}) => {
             </div>
         </div>
     )
-}
-
-type SidebarPropsType = {
-    name: string
-    src: string
-}
-const SidebarUser: React.FC<SidebarPropsType> = ({name, src}) => {
-
-    return <div className={s.friend}>
-
-        <img src={src} />
-        <div>{name}</div>
-    </div>
-}
+})

@@ -6,7 +6,7 @@ type PostPropsType = {
     likesCount: number
 }
 
-export const Post: React.FC<PostPropsType> = ({message, likesCount}) => {
+export const Post: React.FC<PostPropsType> =React.memo( ({message, likesCount}) => {
     return (
         <div className={s.post}>
             <img src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxukAEfWgGFG2o--9YtkAS_kJjHN5PiIE7pQ&usqp=CAU'} />
@@ -16,4 +16,4 @@ export const Post: React.FC<PostPropsType> = ({message, likesCount}) => {
             </div>
         </div>
     )
-}
+})

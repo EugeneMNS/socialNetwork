@@ -8,7 +8,7 @@ type ProfilePropsType = {
     dispatch: (action: ActionType) => void
 }
 
-export const Profile: React.FC<ProfilePropsType> = ({state, dispatch}) => {
+export const Profile: React.FC<ProfilePropsType> =React.memo( ({state, dispatch}) => {
 
     return (
         <div className={s.profile}>
@@ -20,4 +20,4 @@ ava and my profile
                      dispatch={dispatch}/>
         </div>
     )
-}
+})

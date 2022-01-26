@@ -2,7 +2,7 @@ import React from 'react'
 import s from './Header.module.css'
 
 
-export const Header: React.FC = () => {
+export const Header: React.FC = React.memo(() => {
 
     return (
         <div className={s.header}>
@@ -12,4 +12,4 @@ export const Header: React.FC = () => {
             </div>
         </div>
     )
-}
+})
