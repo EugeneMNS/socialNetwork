@@ -1,7 +1,12 @@
-import {SidebarType} from "./state";
-import {ActionType} from "./dialogs-reducer";
-
-const initialState = {
+export type FriendsType = {
+  id: number
+  name: string
+    src: string
+}
+export type SidebarType={
+    friends:Array<FriendsType>
+}
+const initialState:SidebarType={
     friends: [
         {
             id: 6,
@@ -22,6 +27,6 @@ const initialState = {
     ],
 }
 
-export const sidebarReducer = (state: SidebarType = initialState, action: ActionType): SidebarType => {
+export const sidebarReducer = (state: SidebarType = initialState, action: any): SidebarType => {
     return state
 }

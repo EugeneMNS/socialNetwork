@@ -1,36 +1,46 @@
 import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post"
-import {ActionType, addPostActionCreate,changeTextMessageActionCreate, MessageType} from "../../../redux/profile-reducer"
+import {MessageType} from "../../../redux/profile-reducer";
+
 
 type MyPostPropsType = {
-    messages: Array<MessageType>
-    textMessage: string | undefined
-    dispatch: (action: ActionType) => void
+    posts: Array<MessageType>
+    textMessage: string
+    addPost: () => void
+    onChangeText: (text: string) => void
 }
-export const MyPosts: React.FC<MyPostPropsType> = React.memo(({messages, textMessage, dispatch}) => {
-    const message = messages.map((m, i) =>{
-        return <Post key={i} message={m.message} likesCount={m.likesCount}/>
+
+
+export const MyPosts: React.FC<MyPostPropsType> = React.memo(({
+                                                                  posts,
+                                                                  textMessage,
+                                                                  onChangeText,
+                                                                  addPost
+                                                              }) => {
+    const postsMessages = posts.map((p, i) => {
+        return <Post key={i} message={p.message} likesCount={p.likesCount}/>
     })
-    const newPostElement = React.createRef<HTMLTextAreaElement>()
+
+
     const clickPost = () => {
-        dispatch(addPostActionCreate())
+        addPost()
     }
-    const onChangeText=(e: ChangeEvent<HTMLTextAreaElement>)=>{
+    const ChangeText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.currentTarget.value
-        dispatch(changeTextMessageActionCreate(text))
+        onChangeText(text)
     }
     return (
         <div className={s.myPost}>
             <div className={s.messageForm}>
                 <div>
-                    <textarea ref={newPostElement} value={textMessage} readOnly={false} onChange={onChangeText}/>
+                    <textarea value={textMessage} onChange={ChangeText}/>
                 </div>
                 <div>
                     <button onClick={clickPost}>add post</button>
                 </div>
             </div>
-            {message}
+            {postsMessages}
 
         </div>
     )

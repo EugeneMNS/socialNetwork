@@ -1,23 +1,21 @@
 import React from 'react'
 import s from './Profile.module.css'
-import {MyPosts} from './MyPosts/MyPosts';
-import {ActionType,ProfilePageType} from '../../redux/state'
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 type ProfilePropsType = {
-    state: ProfilePageType
-    dispatch: (action: ActionType) => void
+
+
 }
 
-export const Profile: React.FC<ProfilePropsType> =React.memo( ({state, dispatch}) => {
+export const Profile: React.FC<ProfilePropsType> = React.memo(() => {
 
     return (
         <div className={s.profile}>
-            <img src={'https://www.captainbrianonthewater.com/wp-content/uploads/2012/03/download-13.jpg'} />
+            <img src={'https://www.captainbrianonthewater.com/wp-content/uploads/2012/03/download-13.jpg'}/>
             <div>
-ava and my profile
+                ava and my profile
             </div>
-            <MyPosts messages={state.messages} textMessage={state.textMessage}
-                     dispatch={dispatch}/>
+            <MyPostsContainer />
         </div>
     )
 })

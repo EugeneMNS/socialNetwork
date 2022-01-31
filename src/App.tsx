@@ -7,26 +7,31 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {Route} from 'react-router-dom';
 import {Music} from './components/Music/Music';
 import {News} from "./components/News/News";
-import {ActionType, StateType} from "./redux/state";
+import {EmptyObject, Store} from "redux";
+import {ProfileActionType, ProfilePageType} from "./redux/profile-reducer";
+import {DialogsActionType, DialogsPageType} from "./redux/dialogs-reducer";
+import {SidebarType} from './redux/sidebar-reducer';
+import { DialogsContainer } from './components/Dialogs/DialogsContainer';
+
+type StoreType =
+    Store<EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogsPageType; sidebar: SidebarType; }, ProfileActionType | DialogsActionType>
+
 
 type AppPropsType = {
-    state: StateType
-    dispatch: (action: ActionType) => void
+
 }
 
-export const App: React.FC<AppPropsType> = ({state, dispatch}) => {
-                                            
-    return (
 
+export const App: React.FC<AppPropsType> = () => {
+
+    return (
 
         <div className='app-wrapper'>
             <Header/>
-            <Navbar state={state.sidebar}/>
+            <Navbar />
             <div className='wrapper-content'>
-                <Route exact path={'/dialogs'} render={() => <Dialogs state={state.dialogsPage}
-                                                                     dispatch= {dispatch}/>}/>
-                <Route path='/profile' render={() => <Profile state={state.profilePage}
-                                                              dispatch={dispatch}/>}/>
+                <Route exact path={'/dialogs'} render={() => <DialogsContainer />}/>
+                <Route path='/profile' render={() => <Profile />}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
             </div>
@@ -34,6 +39,9 @@ export const App: React.FC<AppPropsType> = ({state, dispatch}) => {
 
     );
 }
+
+
+
 
 
 

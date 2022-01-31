@@ -4,25 +4,21 @@ export const CHANGE_TEXT_MESSAGE = 'CHANGE-TEXT-MESSAGE'
 
 export type MessageType = {
     id: number
-    message: string | undefined
+    message: string
     likesCount: number
 }
 
 export type ProfilePageType = {
-    messages: Array<MessageType>
-    textMessage: string | undefined
+    posts: Array<MessageType>
+    textMessage: string
+
 }
 
+export type ProfileActionType = AddPostActionCreate | ChangeTextMessageActionCreate
 
 
-export type ActionType = {
-    type: string
-    text?: string | undefined
-}
-
-
-const initialState = {
-    messages: [
+const initialState: ProfilePageType = {
+    posts: [
         {
             id: 1,
             message: 'Hello, it is my message!',
@@ -36,14 +32,15 @@ const initialState = {
         },
         {
             id: 3,
-            message: "Don't forget for me, please!",
+            message: `Don't forget for me, please!`,
             likesCount: 15
         }
     ],
     textMessage: ''
 }
 
-export const profileReducer = (state:ProfilePageType = initialState, action: ActionType): ProfilePageType => {
+export const profileReducer = (state:ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
+
     switch (action.type) {
         case (ADD_POST):
 
@@ -53,7 +50,7 @@ export const profileReducer = (state:ProfilePageType = initialState, action: Act
                 likesCount: 19
             }
 
-            state = {...state, messages: [...state.messages, newPost]}
+            state = {...state, posts: [...state.posts, newPost]}
             state.textMessage = ''
             return state
 
@@ -67,10 +64,18 @@ export const profileReducer = (state:ProfilePageType = initialState, action: Act
 
     }
 }
-export const addPostActionCreate = (): ActionType => ({
+
+type AddPostActionCreate = {type: typeof ADD_POST}
+export const addPostActionCreate = (): AddPostActionCreate => ({
     type: ADD_POST
 })
-export const changeTextMessageActionCreate = (text: string | undefined): ActionType => ({
+
+type ChangeTextMessageActionCreate = {
+    type: typeof CHANGE_TEXT_MESSAGE,
+    text: string
+
+}
+export const changeTextMessageActionCreate = (text: string): ChangeTextMessageActionCreate => ({
     type: CHANGE_TEXT_MESSAGE,
     text: text
 })

@@ -2,7 +2,7 @@ import React from "react";
 import s from './../MyPosts.module.css'
 
 type PostPropsType = {
-    message: string | undefined
+    message: string
     likesCount: number
 }
 

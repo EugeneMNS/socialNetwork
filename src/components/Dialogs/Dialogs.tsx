@@ -1,7 +1,8 @@
 import React, {ChangeEvent} from 'react'
 import {NavLink} from 'react-router-dom'
 import s from './Dialogs.module.css'
-import {ActionType,addDialogsTextActionCreate,DialogsPageType, updateDialogsMessageActionCreate} from "../../redux/dialogs-reducer";
+import {DialogItemType, DialogsTextsType} from "../../redux/dialogs-reducer";
+
 
 type DialogsItemPropsType = {
     id: number
@@ -12,8 +13,6 @@ const DialogItem: React.FC<DialogsItemPropsType> = ({id, name}) => {
     return (
 
         <NavLink className={s.item} activeClassName={s.active} to={'/dialogs/' + id}>{name}</NavLink>
-
-
     )
 }
 
@@ -28,22 +27,28 @@ const Message: React.FC<MessagePropsType> = ({message}) => {
 }
 
 type DialogsPropsType = {
-    state: DialogsPageType
-    dispatch: (action: ActionType) => void
+    dialogItems: Array<DialogItemType>
+    dialogTexts: Array<DialogsTextsType>
+    newMessage: string
+    addMessage: () => void
+    onChangeMessage: (text: string) => void
 }
 
-export const Dialogs: React.FC<DialogsPropsType> = React.memo(({state, dispatch}) => {
+export const Dialogs: React.FC<DialogsPropsType> = React.memo((props) => {
 
-    const dialogsItems = state.dialogItems.map( d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
-    const dialogsTexts = state.dialogTexts.map( (t,i) => <Message key={i} message={t.message}/>)
+    const dialogsItems = props.dialogItems.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
+    const dialogsTexts = props.dialogTexts.map((t, i) => <Message key={i} message={t.message}/>)
     const newMessageElement = React.createRef<HTMLTextAreaElement>()
     const addMessage = () => {
-        dispatch(addDialogsTextActionCreate())
+
+        props.addMessage()
     }
-    const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>)=>{
-    const text =e.currentTarget.value
-        dispatch(updateDialogsMessageActionCreate(text))
+    const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
+
+        const text = e.currentTarget.value
+        props.onChangeMessage(text)
     }
+
     return (
         <div className={s.dialogsContainer}>
             <div className={s.dialogItem}>
@@ -53,7 +58,7 @@ export const Dialogs: React.FC<DialogsPropsType> = React.memo(({state, dispatch}
                 {dialogsTexts}
 
                 <div className={s.textarea}>
-                    <textarea  value={state.newMessage} onChange={onChangeMessage}/>
+                    <textarea value={props.newMessage} onChange={onChangeMessage}/>
                 </div>
                 <button onClick={addMessage}>add message</button>
 
