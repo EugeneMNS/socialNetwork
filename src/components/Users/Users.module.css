@@ -1,0 +1,31 @@
+.userContainer {
+    display: flex;
+    margin: 10px;
+    padding: 5px;
+    /*border: 1px solid red;*/
+    border-radius: 10px;
+    background-color: khaki;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+}
+
+.userInfo {
+
+    width: 350px;
+    margin-left: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: azure;
+}
+
+.userLocation {
+    padding-top: 10px;
+}
+
+.button {
+    width: 30px;
+}

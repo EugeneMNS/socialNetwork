@@ -7,16 +7,15 @@ import {Provider} from "react-redux";
 
 
 const rerenderEntireTree = () => {
-    const state= store.getState()
+    const state = store.getState()
 
     ReactDOM.render(
-        <React.StrictMode>
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </BrowserRouter>
-        </React.StrictMode>, document.getElementById('root'))
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>,
+        document.getElementById('root'))
 }
 
 
