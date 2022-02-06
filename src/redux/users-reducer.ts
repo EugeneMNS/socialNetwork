@@ -1,20 +1,16 @@
-import {v1} from 'uuid';
-
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 
-type LocationType = {
-    cityName: string
-    countryName: string
-}
 export type UserType = {
-    id: string
-    fullName: string
-    userPhoto: string
-    followed: boolean
+    id: number
+    name: string
     status: string
-    location: LocationType
+    photos: {
+        small: string
+        large: string
+    }
+    followed: boolean
 }
 type UsersType = {
     users: Array<UserType>
@@ -60,14 +56,14 @@ export const usersReducer = (state: UsersType = initialState, action: ActionType
 
 }
 
-type FollowActionCreateType = { type: typeof FOLLOW, userId: string }
-export const FollowActionCreate = (userId: string): FollowActionCreateType => ({
+type FollowActionCreateType = { type: typeof FOLLOW, userId: number }
+export const FollowActionCreate = (userId: number): FollowActionCreateType => ({
     type: FOLLOW,
     userId
 })
 
-type UnFollowActionCreateType = { type: typeof UNFOLLOW, userId: string }
-export const UnFollowActionCreate = (userId: string): UnFollowActionCreateType => ({
+type UnFollowActionCreateType = { type: typeof UNFOLLOW, userId: number }
+export const UnFollowActionCreate = (userId: number): UnFollowActionCreateType => ({
     type: UNFOLLOW,
     userId
 })
