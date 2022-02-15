@@ -33,7 +33,7 @@ export const App: React.FC<AppPropsType> = () => {
             <div className='wrapper-content'>
                 <Route exact path={'/dialogs'} render={() => <DialogsContainer />}/>
                 <Route path='/profile' render={() => <Profile />}/>
-                <Route path={'users'} render={() => <UsersContainer />}/>
+                <Route path={'/users'} render={() => <UsersContainer />}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
             </div>
