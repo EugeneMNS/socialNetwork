@@ -1,6 +1,8 @@
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
+const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
 
 export type UserType = {
     id: number
@@ -14,13 +16,19 @@ export type UserType = {
 }
 type UsersType = {
     users: Array<UserType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
 const initialState: UsersType = {
-    users: []
+    users: [],
+    pageSize: 99,
+    totalUsersCount: 50,
+    currentPage: 5,
 }
 
-type ActionType = FollowActionCreateType | UnFollowActionCreateType | SetUsersActionCreateType
+type ActionType = FollowACType | UnFollowACType | SetUsersACType | SetCurrentPageACType | SetTotalUsersCountACType
 
 export const usersReducer = (state: UsersType = initialState, action: ActionType): UsersType => {
     switch (action.type) {
@@ -47,29 +55,50 @@ export const usersReducer = (state: UsersType = initialState, action: ActionType
         case "SET-USERS":
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: action.users
             }
-
+        case "SET-CURRENT-PAGE":
+            return {
+                ...state,
+                currentPage:action.currentPage
+            }
+        case "SET-TOTAL-USERS-COUNT":
+            return {
+                ...state,
+                totalUsersCount:action.totalUsersCount
+            }
         default:
             return state
     }
 
 }
 
-type FollowActionCreateType = { type: typeof FOLLOW, userId: number }
-export const FollowActionCreate = (userId: number): FollowActionCreateType => ({
+type FollowACType = { type: typeof FOLLOW, userId: number }
+export const FollowAC = (userId: number): FollowACType => ({
     type: FOLLOW,
     userId
 })
 
-type UnFollowActionCreateType = { type: typeof UNFOLLOW, userId: number }
-export const UnFollowActionCreate = (userId: number): UnFollowActionCreateType => ({
+type UnFollowACType = { type: typeof UNFOLLOW, userId: number }
+export const UnFollowAC = (userId: number): UnFollowACType => ({
     type: UNFOLLOW,
     userId
 })
 
-type SetUsersActionCreateType = { type: typeof SET_USERS, users: Array<UserType> }
-export const SetUsersActionCreate = (users: Array<UserType>): SetUsersActionCreateType => ({
+type SetUsersACType = { type: typeof SET_USERS, users: Array<UserType> }
+export const SetUsersAC = (users: Array<UserType>): SetUsersACType => ({
     type: SET_USERS,
     users
+})
+
+type SetCurrentPageACType = { type: typeof SET_CURRENT_PAGE, currentPage: number }
+export const SetCurrentPageAC = (currentPage: number): SetCurrentPageACType=>({
+    type: SET_CURRENT_PAGE,
+    currentPage
+})
+
+type SetTotalUsersCountACType = { type: typeof SET_TOTAL_USERS_COUNT, totalUsersCount: number }
+export const SetTotalUsersCountAC = (totalCount: number): SetTotalUsersCountACType => ({
+    type: SET_TOTAL_USERS_COUNT,
+    totalUsersCount: totalCount
 })
