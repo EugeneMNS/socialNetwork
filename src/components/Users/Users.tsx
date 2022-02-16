@@ -1,7 +1,7 @@
 import React from 'react'
 import {UserType} from "../../redux/users-reducer"
 import s from './Users.module.css'
-import axios from 'axios'
+import {Preloader} from "../common/Preloader";
 import userPhoto from '../../assets/images/users2.jpg'
 
 
@@ -10,11 +10,10 @@ type UsersPropsType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    setUsers: (users: Array<UserType>) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalCount: number) => void
+    changeCurrentPage: (pageNumber: number) => void
 }
 
 type ResponseType = {
@@ -23,82 +22,63 @@ type ResponseType = {
     error: string
 }
 
-class Users extends React.Component<UsersPropsType, UserType[]> {
+const Users: React.FC<UsersPropsType> = (props) => {
 
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}
-        &page=${this.props.currentPage}`)
-            .then((response: any) => {
-            this.props.setUsers(response.data.items)
-            this.props.setTotalUsersCount(response.data.totalCount)
-        })
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    const pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
-
-    changeCurrentPage = (page: number) => {
-        this.props.setCurrentPage(page)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}
-        &page=${page}`)
-            .then((response: any) => {
-                this.props.setUsers(response.data.items)
-            })
-    }
-    render() {
-        const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
-        const pages = []
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i)
-        }
-
-        return (
-
+    return (
+        <div>
+            {props.isFetching && <Preloader/>}
             <div>
-                <div>
-                    {pages.map(p=>{
-                        return(
-                            <span key={p} className={this.props.currentPage===p ? s.selectedPage : ``}
-                                  onClick={()=>this.changeCurrentPage(p)}>{p}</span>
-                        )
-                    })}
-                </div>
-                {
-                    this.props.users.map(u => <div key={u.id} className={s.userContainer}>
-                        <div>
-                            <div>
-                                {u.name}
-                            </div>
-                            <img className={s.avatar} src={u.photos.small !== null ? u.photos.small : userPhoto}/>
-                            <div className={s.button}>
-                                {u.followed
-                                    ? <button onClick={() => this.props.unfollow(u.id)}>FOLLOW</button>
-                                    : <button onClick={() => this.props.follow(u.id)}>UNFOLLOW</button>}
-
-                            </div>
-                        </div>
-                        <div className={s.userInfo}>
-
-                            <div>
-                                My status:
-                                {`\t ${u.status}`}
-                            </div>
-                            <div className={s.userLocation}>
-                                <div>
-                                    City:
-                                    {'u.location.cityName'}
-                                </div>
-                                <div>
-                                    Country:
-                                    {'u.location.countryName'}
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </div>)
-                }
+                {pages.map(p => {
+                    return (
+                        <span key={p} className={props.currentPage === p ? s.selectedPage : ''}
+                              onClick={() => props.changeCurrentPage(p)}>{p}</span>
+                    )
+                })}
             </div>
-        )
-    }
+            )
+            {
+                props.users.map(u => <div key={u.id} className={s.userContainer}>
+                    <div>
+                        <div>
+                            {u.name}
+                        </div>
+                        <img className={s.avatar} src={u.photos.small !== null ? u.photos.small : userPhoto}/>
+                        <div className={s.button}>
+                            {u.followed
+                                ? <button onClick={() => props.unfollow(u.id)}>FOLLOW</button>
+                                : <button onClick={() => props.follow(u.id)}>UNFOLLOW</button>}
+
+                        </div>
+                    </div>
+                    <div className={s.userInfo}>
+
+                        <div>
+                            Country:
+                            {`u.location.countryName`}
+                        </div>
+                        <div className={s.userLocation}>
+                            <div>
+                                City:
+                                {'u.location.cityName'}
+                            </div>
+                            <div>
+                                Country:
+                                {'u.location.countryName'}
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>)
+            }
+        </div>
+    )
 }
 
 export default Users

@@ -12,7 +12,7 @@ import {ProfileActionType, ProfilePageType} from "./redux/profile-reducer";
 import {DialogsActionType, DialogsPageType} from "./redux/dialogs-reducer";
 import {SidebarType} from './redux/sidebar-reducer';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
-import {UsersContainer} from "./components/Users/UsersContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 type StoreType =
     Store<EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogsPageType; sidebar: SidebarType; }, ProfileActionType | DialogsActionType>
