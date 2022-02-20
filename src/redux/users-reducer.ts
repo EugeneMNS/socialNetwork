@@ -74,7 +74,7 @@ export const usersReducer = (state: UsersType = initialState, action: ActionType
         case "SET-TOTAL-USERS-COUNT":
             return {
                 ...state,
-                totalUsersCount:action.totalUsersCount
+                totalUsersCount:action.totalUsersCount/10
             }
         case "TOGGLE-IS-FETCHING":
             return {
