@@ -1,11 +1,11 @@
 import React from 'react'
 import {
-    FollowAC,
-    SetCurrentPageAC,
-    SetTotalUsersCountAC,
-    SetUsersAC,
-    ToggleIsFetchingAC,
-    UnFollowAC,
+    follow,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleIsFetching,
+    unfollow,
     UserType
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/store";
@@ -13,7 +13,7 @@ import {connect} from "react-redux";
 import Users from "./Users";
 import axios from "axios";
 
-type UsersContainerType = MapStateToPropsType & MapDispatchToPropsType
+type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 
 type ResponseType = {
@@ -22,7 +22,7 @@ type ResponseType = {
     error: string
 }
 
-class UsersContainer extends React.Component<UsersContainerType, UserType[]> {
+class UsersContainer extends React.Component<UsersContainerPropsType, UserType[]> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
@@ -87,27 +87,15 @@ type MapDispatchToPropsType = {
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
 }
-const MapDispatchToProps = (dispatch: any) => {
-    return {
-        follow: (userId: number) => {
-            dispatch(FollowAC(userId))
-        },
-        unfollow: (userId: number) => {
-            dispatch(UnFollowAC(userId))
-        },
-        setUsers: (users: Array<UserType>) => {
-            dispatch(SetUsersAC(users))
-        },
-        setCurrentPage: (pageNumber: number) => {
-            dispatch(SetCurrentPageAC(pageNumber))
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(SetTotalUsersCountAC(totalCount))
-        },
-        toggleIsFetching: (isFetching: boolean) => {
-            dispatch(ToggleIsFetchingAC(isFetching))
-        }
+
+export default connect<MapStateToPropsType,MapDispatchToPropsType,{}, AppStateType>(
+    MapStateToProps,
+    {
+        follow,
+        unfollow,
+        setUsers,
+        setCurrentPage,
+        setTotalUsersCount,
+        toggleIsFetching
     }
-}
-export default connect<MapStateToPropsType,MapDispatchToPropsType,{}, AppStateType>
-(MapStateToProps, MapDispatchToProps)(UsersContainer)
+)(UsersContainer)

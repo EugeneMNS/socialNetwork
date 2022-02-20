@@ -1,5 +1,6 @@
 export const ADD_POST = 'ADD-POST'
 export const CHANGE_TEXT_MESSAGE = 'CHANGE-TEXT-MESSAGE'
+export const SET_USER_PROFILE = 'SET-USER-PROFILE'
 
 
 export type MessageType = {
@@ -8,13 +9,38 @@ export type MessageType = {
     likesCount: number
 }
 
+type PhotosType = {
+    small: string
+    large: string
+}
+
+type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
+
 export type ProfilePageType = {
     posts: Array<MessageType>
     textMessage: string
-
+    profile: UserProfileInfoType | null
 }
 
-export type ProfileActionType = AddPostActionCreate | ChangeTextMessageActionCreate
+export type UserProfileInfoType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ContactsType
+    photos: PhotosType
+}
+
+export type ProfileActionType = AddPostType | ChangeTextMessageType | SetUsersProfileInfoType
 
 
 const initialState: ProfilePageType = {
@@ -36,7 +62,8 @@ const initialState: ProfilePageType = {
             likesCount: 15
         }
     ],
-    textMessage: ''
+    textMessage: '',
+    profile: null as UserProfileInfoType | null
 }
 
 export const profileReducer = (state:ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
@@ -59,23 +86,38 @@ export const profileReducer = (state:ProfilePageType = initialState, action: Pro
 
             state = {...state, textMessage: action.text}
             return state
+        case "SET-USER-PROFILE":
+            return {
+                ...state,
+                profile: action.profile
+            }
         default:
             return state
 
     }
 }
 
-type AddPostActionCreate = {type: typeof ADD_POST}
-export const addPostActionCreate = (): AddPostActionCreate => ({
+type AddPostType = {type: typeof ADD_POST}
+export const addPost = (): AddPostType => ({
     type: ADD_POST
 })
 
-type ChangeTextMessageActionCreate = {
+type ChangeTextMessageType= {
     type: typeof CHANGE_TEXT_MESSAGE,
     text: string
 
 }
-export const changeTextMessageActionCreate = (text: string): ChangeTextMessageActionCreate => ({
+export const changeTextMessage = (text: string): ChangeTextMessageType => ({
     type: CHANGE_TEXT_MESSAGE,
     text: text
+})
+
+type SetUsersProfileInfoType = {
+    type: typeof SET_USER_PROFILE,
+    profile: UserProfileInfoType | null
+}
+
+export const setUserProfileInfo = (profile: UserProfileInfoType | null): SetUsersProfileInfoType => ({
+    type: SET_USER_PROFILE,
+    profile
 })

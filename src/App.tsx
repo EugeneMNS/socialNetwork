@@ -13,6 +13,7 @@ import {DialogsActionType, DialogsPageType} from "./redux/dialogs-reducer";
 import {SidebarType} from './redux/sidebar-reducer';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 type StoreType =
     Store<EmptyObject & { profilePage: ProfilePageType; dialogsPage: DialogsPageType; sidebar: SidebarType; }, ProfileActionType | DialogsActionType>
@@ -32,7 +33,7 @@ export const App: React.FC<AppPropsType> = () => {
             <Navbar />
             <div className='wrapper-content'>
                 <Route exact path={'/dialogs'} render={() => <DialogsContainer />}/>
-                <Route path='/profile' render={() => <Profile />}/>
+                <Route path='/profile' render={() => <ProfileContainer />}/>
                 <Route path={'/users'} render={() => <UsersContainer />}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>

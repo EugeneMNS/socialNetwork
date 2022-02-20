@@ -32,12 +32,12 @@ const initialState: UsersType = {
 }
 
 type ActionType =
-    FollowACType
-    | UnFollowACType
-    | SetUsersACType
-    | SetCurrentPageACType
-    | SetTotalUsersCountACType
-    | ToggleIsFetchingACType
+    FollowType
+    | UnFollowType
+    | SetUsersType
+    | SetCurrentPageType
+    | SetTotalUsersCountType
+    | ToggleIsFetchingType
 
 export const usersReducer = (state: UsersType = initialState, action: ActionType): UsersType => {
     switch (action.type) {
@@ -87,38 +87,38 @@ export const usersReducer = (state: UsersType = initialState, action: ActionType
 
 }
 
-type FollowACType = { type: typeof FOLLOW, userId: number }
-export const FollowAC = (userId: number): FollowACType => ({
+type FollowType = { type: typeof FOLLOW, userId: number }
+export const follow = (userId: number): FollowType => ({
     type: FOLLOW,
     userId
 })
 
-type UnFollowACType = { type: typeof UNFOLLOW, userId: number }
-export const UnFollowAC = (userId: number): UnFollowACType => ({
+type UnFollowType = { type: typeof UNFOLLOW, userId: number }
+export const unfollow = (userId: number): UnFollowType => ({
     type: UNFOLLOW,
     userId
 })
 
-type SetUsersACType = { type: typeof SET_USERS, users: Array<UserType> }
-export const SetUsersAC = (users: Array<UserType>): SetUsersACType => ({
+type SetUsersType = { type: typeof SET_USERS, users: Array<UserType> }
+export const setUsers = (users: Array<UserType>): SetUsersType => ({
     type: SET_USERS,
     users
 })
 
-type SetCurrentPageACType = { type: typeof SET_CURRENT_PAGE, currentPage: number }
-export const SetCurrentPageAC = (currentPage: number): SetCurrentPageACType=>({
+type SetCurrentPageType = { type: typeof SET_CURRENT_PAGE, currentPage: number }
+export const setCurrentPage = (currentPage: number): SetCurrentPageType=>({
     type: SET_CURRENT_PAGE,
     currentPage
 })
 
-type SetTotalUsersCountACType = { type: typeof SET_TOTAL_USERS_COUNT, totalUsersCount: number }
-export const SetTotalUsersCountAC = (totalCount: number): SetTotalUsersCountACType => ({
+type SetTotalUsersCountType = { type: typeof SET_TOTAL_USERS_COUNT, totalUsersCount: number }
+export const setTotalUsersCount = (totalCount: number): SetTotalUsersCountType => ({
     type: SET_TOTAL_USERS_COUNT,
     totalUsersCount: totalCount
 })
 
-type ToggleIsFetchingACType = { type: typeof TOGGLE_IS_FETCHING, isFetching: boolean }
-export const ToggleIsFetchingAC = (isFetching: boolean): ToggleIsFetchingACType => ({
+type ToggleIsFetchingType = { type: typeof TOGGLE_IS_FETCHING, isFetching: boolean }
+export const toggleIsFetching = (isFetching: boolean): ToggleIsFetchingType => ({
     type: TOGGLE_IS_FETCHING,
     isFetching
 })

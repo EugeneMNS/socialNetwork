@@ -3,3 +3,7 @@
     height: 150px;
     width: 100%;
 }
+
+.profileInfo img {
+    width: 200px;
+}

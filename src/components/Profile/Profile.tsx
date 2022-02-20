@@ -1,20 +1,18 @@
 import React from 'react'
 import s from './Profile.module.css'
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {ProfileInfo} from "./MyPosts/ProfileInfo/ProfileInfo";
+import {UserProfileInfoType} from "../../redux/profile-reducer";
 
 type ProfilePropsType = {
-
-
+    profile: UserProfileInfoType | null
 }
 
-export const Profile: React.FC<ProfilePropsType> = React.memo(() => {
+export const Profile: React.FC<ProfilePropsType> = React.memo(({profile}) => {
 
     return (
         <div className={s.profile}>
-            <img src={'https://www.captainbrianonthewater.com/wp-content/uploads/2012/03/download-13.jpg'}/>
-            <div>
-                ava and my profile
-            </div>
+           <ProfileInfo profile={profile}/>
             <MyPostsContainer />
         </div>
     )

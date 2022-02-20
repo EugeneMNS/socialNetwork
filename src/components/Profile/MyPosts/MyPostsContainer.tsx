@@ -1,6 +1,6 @@
 import React from "react";
 import s from './MyPosts.module.css'
-import {addPostActionCreate, changeTextMessageActionCreate, MessageType} from "../../../redux/profile-reducer";
+import {addPost, changeTextMessage, MessageType} from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {AppStateType} from "../../../redux/store";
 import {connect} from "react-redux";
@@ -26,10 +26,10 @@ type MapDispatchToPropsType = {
 const MapDispatchToProps = (dispatch: any): MapDispatchToPropsType => {
     return {
         addPost: () => {
-            dispatch(addPostActionCreate())
+            dispatch(addPost())
         },
         onChangeText: (text: string) => {
-            dispatch(changeTextMessageActionCreate(text))
+            dispatch(changeTextMessage(text))
         }
     }
 }
