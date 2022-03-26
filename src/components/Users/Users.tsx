@@ -4,6 +4,7 @@ import s from './Users.module.css'
 import {Preloader} from "../common/Preloader";
 import userPhoto from '../../assets/images/users2.jpg'
 import {NavLink} from "react-router-dom";
+import axios from 'axios';
 
 
 type UsersPropsType = {
@@ -12,9 +13,12 @@ type UsersPropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress:Array<number>
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     changeCurrentPage: (pageNumber: number) => void
+    getFollowCallback: (userId: number)=>void
+    getUnfollowCallback: (userId: number)=>void
 }
 
 type ResponseType = {
@@ -53,8 +57,12 @@ const Users: React.FC<UsersPropsType> = (props) => {
                         </NavLink>
                         <div className={s.button}>
                             {u.followed
-                                ? <button onClick={() => props.unfollow(u.id)}>FOLLOW</button>
-                                : <button onClick={() => props.follow(u.id)}>UNFOLLOW</button>}
+                                ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => props.getUnfollowCallback(u.id)
+                                }>UNFOLLOW</button>
+
+                                : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => props.getFollowCallback(u.id)
+                                }>FOLLOW</button>
+                            }
 
                         </div>
                     </div>
