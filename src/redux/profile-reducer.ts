@@ -1,3 +1,8 @@
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./store";
+import {profileApi} from "../api/api";
+import {toggleIsFetching, ToggleIsFetchingType} from "./users-reducer";
+
 export const ADD_POST = 'ADD-POST'
 export const CHANGE_TEXT_MESSAGE = 'CHANGE-TEXT-MESSAGE'
 export const SET_USER_PROFILE = 'SET-USER-PROFILE'
@@ -121,3 +126,11 @@ export const setUserProfileInfo = (profile: UserProfileInfoType | null): SetUser
     type: SET_USER_PROFILE,
     profile
 })
+
+type ThunkType = ThunkAction<void, AppStateType, undefined, ProfileActionType>
+export const getUserProfile = (userId: number): ThunkType =>(dispatch) =>{
+    profileApi.getUserProfile(userId)
+        .then((data:any)=>{
+            dispatch(setUserProfileInfo(data))
+        })
+}
