@@ -29,7 +29,7 @@ export const usersApi= {
     }
 }
 export const authApi={
-    getAuthMe(){
+    me(){
         return instance.get('https://social-network.samuraijs.com/api/1.0/auth/me')
     }
 }
