@@ -3,3 +3,22 @@
     height: 150px;
     width: 100%;
 }
+
+.profileInfo {
+    height: 150px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.profileInfo img{
+    height: 150px;
+    width: 80%;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    background-color: whitesmoke;
+}
