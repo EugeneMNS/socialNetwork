@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink, Redirect} from 'react-router-dom'
 import s from './Dialogs.module.css'
 import {DialogItemType, DialogsTextsType} from "../../redux/dialogs-reducer";
 
@@ -27,6 +27,7 @@ const Message: React.FC<MessagePropsType> = ({message}) => {
 }
 
 type DialogsPropsType = {
+    isAuth: boolean
     dialogItems: Array<DialogItemType>
     dialogTexts: Array<DialogsTextsType>
     newMessage: string
@@ -48,7 +49,7 @@ export const Dialogs: React.FC<DialogsPropsType> = React.memo((props) => {
         const text = e.currentTarget.value
         props.onChangeMessage(text)
     }
-
+   if (!props.isAuth) return <Redirect to={'/login'}/>
     return (
         <div className={s.dialogsContainer}>
             <div className={s.dialogItem}>
