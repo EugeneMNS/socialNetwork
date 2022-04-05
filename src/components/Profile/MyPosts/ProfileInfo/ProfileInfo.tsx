@@ -7,9 +7,12 @@ import ProfileStatus from "../ProfileInfo/ProfileStatus";
 
 type ProfileInfoPropsType={
     profile:UserProfileInfoType | null
+    status: string
+    changeUserProfileStatus: (status: string) => void
 }
 
-export const ProfileInfo: React.FC<ProfileInfoPropsType>= React.memo(({profile})=>{
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({profile, status, changeUserProfileStatus}) => {
+
     if (!profile) {
         return <Preloader/>
     }
@@ -22,7 +25,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType>= React.memo(({profile})
 
             <div className={s.infoBlock}>
                 <h3>{profile.fullName}</h3>
-                <ProfileStatus status={'hi'}/>
+                <ProfileStatus status={status} changeUserProfileStatus={changeUserProfileStatus}/>
                 <div>{profile.lookingForAJobDescription}</div>
                 <div>status</div>
 

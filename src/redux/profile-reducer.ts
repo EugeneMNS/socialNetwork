@@ -1,11 +1,14 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
 import {profileApi} from "../api/api";
+import {log} from "util"
 
 export const ADD_POST = 'ADD-POST'
 export const CHANGE_TEXT_MESSAGE = 'CHANGE-TEXT-MESSAGE'
 export const SET_USER_PROFILE = 'SET-USER-PROFILE'
 
+const GET_USER_PROFILE_STATUS = 'GET-USER-PROFILE-STATUS'
+const CHANGE_USER_PROFILE_STATUS = 'CHANGE-USER-PROFILE-STATUS'
 
 export type MessageType = {
     id: number
@@ -33,6 +36,7 @@ export type ProfilePageType = {
     posts: Array<MessageType>
     textMessage: string
     profile: UserProfileInfoType | null
+    status: string
 }
 
 export type UserProfileInfoType = {
@@ -44,7 +48,10 @@ export type UserProfileInfoType = {
     photos: PhotosType
 }
 
-export type ProfileActionType = AddPostType | ChangeTextMessageType | SetUsersProfileInfoType
+export type ProfileActionType = AddPostType
+    | ChangeTextMessageType
+    | SetUsersProfileInfoType
+    | GetUserStatusType
 
 
 const initialState: ProfilePageType = {
@@ -67,7 +74,8 @@ const initialState: ProfilePageType = {
         }
     ],
     textMessage: '',
-    profile: null as UserProfileInfoType | null
+    profile: null as UserProfileInfoType | null,
+    status: '',
 }
 
 export const profileReducer = (state:ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
@@ -94,6 +102,11 @@ export const profileReducer = (state:ProfilePageType = initialState, action: Pro
             return {
                 ...state,
                 profile: action.profile
+            }
+        case "GET-USER-PROFILE-STATUS":
+            return {
+                ...state,
+                status:action.status
             }
         default:
             return state
@@ -126,10 +139,36 @@ export const setUserProfileInfo = (profile: UserProfileInfoType | null): SetUser
     profile
 })
 
+type GetUserStatusType = {
+    type: typeof GET_USER_PROFILE_STATUS
+    status: string
+}
+export const getUserStatus = (status: string): GetUserStatusType => ({
+
+    type: GET_USER_PROFILE_STATUS,
+    status
+})
+
 type ThunkType = ThunkAction<void, AppStateType, undefined, ProfileActionType>
 export const getUserProfile = (userId: number): ThunkType =>(dispatch) =>{
     profileApi.getUserProfile(userId)
-        .then((data:any)=>{
+        .then(data =>{
             dispatch(setUserProfileInfo(data))
+        })
+}
+
+export const getUserProfileStatus = (userId: number): ThunkType => (dispatch) => {
+    profileApi.getUserStatus(userId)
+        .then(data => {
+
+            dispatch(getUserStatus(data))
+        })
+}
+export const changeUserProfileStatus = (status: string): ThunkType => (dispatch) => {
+    profileApi.changeUserStatus(status)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(getUserStatus(status))
+            }
         })
 }
