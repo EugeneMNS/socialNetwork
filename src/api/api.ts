@@ -37,12 +37,21 @@ export const usersApi= {
         )
     }
 }
-export const authApi={
-    me(){
+export const authApi= {
+    me() {
         return instance.get<ResponseType<{
             id: number, email: string, login: string
-        }>>('https://social-network.samuraijs.com/api/1.0/auth/me')
+        }>>('auth/me')
             .then(response => response.data)
+    },
+    setLogin(payload: any) {
+        return instance.post<ResponseType<{ userId: number }>>(`auth/login`, {...payload})
+            .then(res => res.data)
+    },
+    deleteLogin() {
+        return instance.delete<ResponseType>(`auth/login`)
+            .then(res => res.data)
+
     }
 }
 
