@@ -16,14 +16,12 @@ type MapStateToPropsType = {
     dialogItems: Array<DialogItemType>
     dialogTexts: Array<DialogsTextsType>
     newMessage: string
-    isAuth: boolean
 }
 const MapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         dialogItems: state.dialogsPage.dialogItems,
         dialogTexts: state.dialogsPage.dialogTexts,
         newMessage: state.dialogsPage.newMessage,
-        isAuth: state.auth.isAuth,
     }
 }
 

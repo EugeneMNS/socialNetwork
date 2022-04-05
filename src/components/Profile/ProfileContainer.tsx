@@ -32,12 +32,10 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
 type MapStateToPropsType = {
     profile: UserProfileInfoType | null
-    isAuth:boolean
 }
 const MapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return   {
         profile: state.profilePage.profile,
-        isAuth: state.auth.isAuth,
     }
 }
 

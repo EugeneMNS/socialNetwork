@@ -1,7 +1,6 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
 import {profileApi} from "../api/api";
-import {toggleIsFetching, ToggleIsFetchingType} from "./users-reducer";
 
 export const ADD_POST = 'ADD-POST'
 export const CHANGE_TEXT_MESSAGE = 'CHANGE-TEXT-MESSAGE'

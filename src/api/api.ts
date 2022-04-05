@@ -1,4 +1,6 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
+import {UserType} from "../redux/users-reducer";
+import {UserProfileInfoType} from "../redux/profile-reducer";
 
 const instance = axios.create(
     {
@@ -9,34 +11,44 @@ const instance = axios.create(
         }
     }
 )
-export type GetUsersResponceType = {
-
+export type ResponseType<T={}> = {
+            data: T
+            resultCode: 0 | 1 | 10
+            messages: string[]
+}
+type UsersResponseType={
+    item: UserType[]
+    totalCount: number
+    error: string
 }
 export const usersApi= {
     getUsers(pageSize: number, currentPage: number) {
-        return instance.get(`users?count=${pageSize}&page=${currentPage}`)
+        return instance.get<UsersResponseType>(`users?count=${pageSize}&page=${currentPage}`)
             .then(response => response.data)
     },
     getFollow(userId: number) {
-        return instance.post(
+        return instance.post<ResponseType>(
             `follow/${userId}`)
 
     },
     getUnfollow(userId: number) {
-        return instance.delete(
+        return instance.delete<ResponseType>(
             `follow/${userId}`
         )
     }
 }
 export const authApi={
     me(){
-        return instance.get('https://social-network.samuraijs.com/api/1.0/auth/me')
+        return instance.get<ResponseType<{
+            id: number, email: string, login: string
+        }>>('https://social-network.samuraijs.com/api/1.0/auth/me')
+            .then(response => response.data)
     }
 }
 
 export const profileApi={
     getUserProfile(userId: number){
-        return instance.get(`profile/`+userId)
+        return instance.get<UserProfileInfoType>(`profile/`+userId)
             .then(response=>response.data)
     }
 }
