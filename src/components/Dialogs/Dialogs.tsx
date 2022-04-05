@@ -49,7 +49,6 @@ export const Dialogs: React.FC<DialogsPropsType> = React.memo((props) => {
         const text = e.currentTarget.value
         props.onChangeMessage(text)
     }
-   if (!props.isAuth) return <Redirect to={'/login'}/>
     return (
         <div className={s.dialogsContainer}>
             <div className={s.dialogItem}>

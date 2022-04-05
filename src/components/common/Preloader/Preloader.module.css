@@ -1,10 +1,7 @@
 .preloaderStyle {
-    position: fixed;
     display: flex;
     justify-content: center;
-    align-content: center;
-    height: 100%;
-    width: 100%;
     background-color: whitesmoke;
     opacity: 0.8;
+    height: 15vh;
 }

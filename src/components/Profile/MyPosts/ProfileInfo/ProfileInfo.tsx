@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./../../Profile.module.css";
 import {UserProfileInfoType} from "../../../../redux/profile-reducer";
-import {Preloader} from "../../../common/Preloader";
+import {Preloader} from "../../../common/Preloader/Preloader";
 import avatarka from "../../../../assets/images/avatarka.jpg"
 
 type ProfileInfoPropsType={

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ComponentType} from 'react'
 import {
     addDialogsTextActionCreate,
     DialogItemType,
@@ -9,6 +9,8 @@ import {
 import {Dialogs} from "./Dialogs";
 import {AppStateType} from "../../redux/store";
 import {connect} from "react-redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type MapStateToPropsType = {
     dialogItems: Array<DialogItemType>
@@ -43,6 +45,9 @@ const MapDispatchToProps = (dispatch: any): MapDispatchToPropsType => {
     }
 }
 
-
-export const DialogsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(
-    MapStateToProps, MapDispatchToProps)(Dialogs)
+export default  compose<ComponentType>(
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(
+        MapStateToProps, MapDispatchToProps),
+        withAuthRedirect
+)
+(Dialogs)
